@@ -1,0 +1,29 @@
+<!-- 안드로이드 매니페스트 -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="kr.boxresin.coroutineactivityresult">
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="false"
+        android:theme="@style/Theme.AndroidCoroutineActivityResult">
+
+        <!-- 첫 번째 액티비티 -->
+        <activity
+            android:name=".FirstActivity"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 두 번째 액티비티 -->
+        <activity
+            android:name=".SecondActivity"
+            android:label="두 번째 액티비티" />
+    </application>
+</manifest>

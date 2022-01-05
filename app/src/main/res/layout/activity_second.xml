@@ -1,0 +1,14 @@
+<!-- 두 번째 액티비티 레이아웃 -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="두 번째 액티비티"
+        android:textSize="30sp"
+        tools:ignore="HardcodedText" />
+</FrameLayout>
