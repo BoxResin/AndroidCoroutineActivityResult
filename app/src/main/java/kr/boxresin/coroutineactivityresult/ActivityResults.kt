@@ -13,6 +13,14 @@ suspend fun FragmentActivity.startActivityForResult(intent: Intent): ActivityRes
     return ensureFragment().startActivityForResult(intent)
 }
 
+/**
+ * 권한을 요청하고 권한 요청 대화상자가 닫힐 때까지 코루틴을 정지한다.
+ * @return 요청 권한 별 획득 성공 여부
+ */
+suspend fun FragmentActivity.requestPermissions(vararg permissions: String): Map<String, Boolean> {
+    return this.ensureFragment().requestPermissions(permissions)
+}
+
 /** 이미 등록된 프래그먼트가 있으면 가져오고, 없으면 프래그먼트를 등록 후 반환한다. */
 private fun FragmentActivity.ensureFragment(): ActivityResultFragment {
     val fragment = this.supportFragmentManager.findFragmentByTag(TAG) as? ActivityResultFragment

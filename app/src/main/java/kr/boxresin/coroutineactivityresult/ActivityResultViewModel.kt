@@ -6,4 +6,5 @@ import kotlin.coroutines.Continuation
 
 internal class ActivityResultViewModel : ViewModel() {
     val activityResultMap = SparseArray<Continuation<ActivityResult>>()
+    val permissionResultMap = SparseArray<Continuation<Map<String, Boolean>>>()
 }
