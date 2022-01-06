@@ -1,9 +1,9 @@
 package kr.boxresin.coroutineactivityresult
 
-import android.content.Intent
+import android.Manifest
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -26,15 +26,22 @@ class FirstActivity : AppCompatActivity() {
         this.scope.cancel()
     }
 
-    /** 액티비티 시작 버튼을 클릭할 때 호출된다. */
+    /** 권한 요청 버튼을 클릭할 때 호출된다. */
     fun onClick(view: View) {
         this.scope.launch {
-            // 두 번째 액티비티 실행
-            val intent = Intent(this@FirstActivity, SecondActivity::class.java)
-            val result: ActivityResult = startActivityForResult(intent)
+            // 카메라 접근과 전화 걸기 권한 요청
+            val granted: Map<String, Boolean> = requestPermissions(
+                Manifest.permission.CAMERA, Manifest.permission.CALL_PHONE
+            )
 
-            // 액티비티 결과를 토스트로 출력
-            Toast.makeText(this@FirstActivity, "$result", Toast.LENGTH_LONG).show()
+            // 카메라 접근 권한 획득 실패 시
+            if (granted[Manifest.permission.CAMERA] != true) {
+                findViewById<TextView>(R.id.txt_message).append("카메라 이용 불가\n")
+            }
+            // 전화 걸기 권한 획득 실패 시
+            if (granted[Manifest.permission.CALL_PHONE] != true) {
+                findViewById<TextView>(R.id.txt_message).append("전화 걸기 불가\n")
+            }
         }
     }
 }

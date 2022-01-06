@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kr.boxresin.coroutineactivityresult">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
