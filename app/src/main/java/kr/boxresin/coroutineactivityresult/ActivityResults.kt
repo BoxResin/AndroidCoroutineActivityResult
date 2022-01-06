@@ -10,16 +10,18 @@ private const val TAG = "ActivityResultFragment"
  * @return 실행된 액티비티의 결과 값
  */
 suspend fun FragmentActivity.startActivityForResult(intent: Intent): ActivityResult {
-    // 이미 등록된 프래그먼트가 있으면 가져오고, 그렇지 않으면 프래그먼트 등록
-    val fragment = this.supportFragmentManager.findFragmentByTag(TAG) as? ActivityResultFragment
-        ?: ActivityResultFragment().also {
-            this.supportFragmentManager.beginTransaction()
-                .add(it, TAG)
-                .commitNow()
-        }
+    return ensureFragment().startActivityForResult(intent)
+}
 
-    // 액티비티 실행 및 결과 반환
-    return fragment.startActivityForResult(intent)
+/** 이미 등록된 프래그먼트가 있으면 가져오고, 없으면 프래그먼트를 등록 후 반환한다. */
+private fun FragmentActivity.ensureFragment(): ActivityResultFragment {
+    val fragment = this.supportFragmentManager.findFragmentByTag(TAG) as? ActivityResultFragment
+
+    return fragment ?: ActivityResultFragment().also {
+        this.supportFragmentManager.beginTransaction()
+            .add(it, TAG)
+            .commitNow()
+    }
 }
 
 /**
