@@ -2,15 +2,22 @@ package kr.boxresin.coroutineactivityresult
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.util.SparseArray
 import androidx.core.util.containsKey
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 internal class ActivityResultFragment : Fragment() {
-    private val viewModel by lazy { ViewModelProvider(this)[ActivityResultViewModel::class.java] }
+    private val viewModel by lazy {
+        val factory = object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T = modelClass.newInstance()
+        }
+        ViewModelProvider(this, factory)[InnerViewModel::class.java]
+    }
 
     suspend fun startActivityForResult(
         intent: Intent
@@ -57,5 +64,10 @@ internal class ActivityResultFragment : Fragment() {
             permissions.zip(grantResults.map { it == PackageManager.PERMISSION_GRANTED }).toMap()
         )
         this.viewModel.permissionResultMap.remove(requestCode)
+    }
+
+    private class InnerViewModel : ViewModel() {
+        val activityResultMap = SparseArray<Continuation<ActivityResult>>()
+        val permissionResultMap = SparseArray<Continuation<Map<String, Boolean>>>()
     }
 }
